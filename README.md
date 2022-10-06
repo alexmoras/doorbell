@@ -1,40 +1,20 @@
-# doorbell
+# Doorbell
+Doorbell is a very simple Vue.js 3 progressive web application that sends a post request to a webhook. That's literally all it does.
 
-This template should help get you started developing with Vue 3 in Vite.
+## Why?
+Communal door entry is a pain. You need to get special keyfobs and issue them out, usually at a charge from the building management company.
 
-## Recommended IDE Setup
+This simple little web-app runs on a unique URL (kind of like a token URL) that can be shared with anyone. With that, they can access the page and send a request to the webhook.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## How?
+The intercom in the flat has a [SwitchBot](https://switch-bot.com) stuck to it which presses the entry button when activated. The SwitchBot is connected to [Home Assistant](https://www.home-assistant.io/) over bluetooth. An automation is set up on Home Assistant to listen for a webhook and then activate the SwitchBot.
 
-## Type Support for `.vue` Imports in TS
+A user rings the intercom then opens the page on their phone, in turn activating the SwitchBot which presses the entry button.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Ummm....
+Yes, its quite a long-winded and hacky solution but its the easiest method without pulling things apart.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+## Config
+The web-app requires two environment variables to be set:
+- `VITE_SECRET_PATH` is a unique URL which acts like a secret token. It must be prepended with `/`.
+- `VITE_WEBHOOK` is the webhook URL, in my case it is a Home Assistant webhook.
